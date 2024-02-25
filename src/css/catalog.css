@@ -1,0 +1,26 @@
+.catalog {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  width: 100%;
+}
+
+.catalog-results {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: flex-start;
+  width: 100%;
+}
+
+#search {
+  width: 50%;
+}
+
+.quote-container{
+  border-bottom: 1px solid grey;
+  padding-top: 2%;
+}
+
+#error-message {
+  color: red;
+}

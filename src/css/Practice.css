@@ -1,0 +1,21 @@
+#practice-view {
+    width: 90%;
+    margin: 0 auto;
+    padding: 32px;
+}
+
+.canvas-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: top;
+}
+
+.right {
+    display: flex;
+    flex-direction: column;
+    margin-left: 10px;
+}
+
+.bottom {
+    width: 100%;
+}

@@ -1,0 +1,63 @@
+#drawingCanvas {
+    width: 100%;
+    margin: auto;
+    max-width: 450px;
+    border: 5px solid white;
+}
+
+#canvas-panel {
+    display: flex;
+}
+
+.canvas-button {
+    margin: auto;
+    background-color: #1899D6;
+    border: solid transparent;
+    border-radius: 16px;
+    border-width: 0 0 4px;
+    box-sizing: border-box;
+    color: #FFFFFF;
+    cursor: pointer;
+    display: inline-block;
+    font-family: din-round,sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: .8px;
+    line-height: 20px;
+    outline: none;
+    /* overflow: visible; */
+    padding: 13px 16px;
+    text-align: center;
+    touch-action: manipulation;
+    transform: translateZ(0);
+    transition: filter .2s;
+}
+
+.canvas-button:hover {
+  filter: brightness(1.1);
+  -webkit-filter: brightness(1.1);
+}
+
+@media (min-width: 400px) {
+    #drawingCanvas {
+        width: 60vw;
+    }
+}
+
+@media (min-width: 768px) {
+    #drawingCanvas {
+        width: 40vw;
+    }
+}
+
+@media (min-width: 1024px) {
+    #drawingCanvas {
+        width: 35vw;
+    }
+}
+
+@media (min-width: 1300px) {
+    #drawingCanvas {
+        width: 40vw;
+    }
+}

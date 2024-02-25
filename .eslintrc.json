@@ -1,0 +1,20 @@
+{
+    "parser": "@typescript-eslint/parser",
+    "plugins": ["@typescript-eslint", "react"],
+    "extends": [
+      "eslint:recommended",
+      "plugin:@typescript-eslint/recommended",
+      "plugin:react/recommended"
+    ],
+    "rules": {
+      "@typescript-eslint/no-var-requires": 0, // We use require in differen scopes for importing SVGs
+      "react/react-in-jsx-scope": 0, // React is not needed for all files 
+      "indent": ["error", 2]
+    },
+    "settings": {
+      "react": {
+        "version": "detect"
+      }
+    }
+}
+  

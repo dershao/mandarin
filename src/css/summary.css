@@ -1,0 +1,14 @@
+.summary-card {
+  display: flex;
+  justify-content: center;
+  padding-top: 1vw;
+}
+
+.card-img {
+    margin: 0;
+    max-width: 11vw;
+}
+
+.correct-img {
+    width: 15%
+}

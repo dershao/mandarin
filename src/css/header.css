@@ -1,0 +1,50 @@
+#header {
+    color: white;
+    background-color: #131418;
+    height: 32vw;
+    max-height: 56px;
+    padding: 0 16px;
+    display: flex;
+    justify-content: space-between;
+}
+
+#header-panel {
+    display: flex;
+}
+
+.header-panel-item {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    font-size: 0.6em;
+    margin: 0.2em;
+}
+
+.header-panel-item:hover {
+    color: #0a7522;
+    cursor: pointer;
+}
+
+@media (max-width: 314px) {
+    #header-text {
+        font-size: 24px;
+    }
+}
+
+@media (min-width: 315px) {
+    #header-text {
+        font-size: 32px;
+    }
+}
+
+@media (max-width: 550px) {
+    #header { 
+        font-size: 16px;
+    }
+}
+
+@media (min-width: 551px) {
+    #header {
+        font-size: 32px;
+    }
+}
