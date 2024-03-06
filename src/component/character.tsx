@@ -60,7 +60,7 @@ export function CharacterCard(character: CharacterProps) {
  */
 export const CharacterImage: React.FC<CharacterProps> = (props: CharacterProps) => {
 
-  const svg = require(`../data/svgs/${props.svgCode}.svg`);
+  const svg = require(`../data/character_images/${props.svgCode}.svg`);
 
   return (
     <>

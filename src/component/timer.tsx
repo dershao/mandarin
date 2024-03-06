@@ -8,7 +8,7 @@ interface TimerProps {
     reset: () => void;
 }
 
-const TIME_LIMIT_SECONDS = 0;
+const TIME_LIMIT_SECONDS = 20;
 
 export const Timer: React.FC<TimerProps> = (props: TimerProps) => {
 

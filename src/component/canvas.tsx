@@ -5,6 +5,12 @@ import { useState, useRef, forwardRef, useImperativeHandle, useEffect, MouseEven
 
 export interface DrawingCanvasRefProps {
   clearCanvas: () => void,
+  getImageData: () => ImageData | undefined
+}
+
+export interface DrawingCanvasProps {
+  backgroundImageUrl?: string,
+  showAnswer?: boolean,
 }
 
 interface DrawingCanvasForwardRefComponentProps {
@@ -61,10 +67,17 @@ export const DrawingCanvas = forwardRef<DrawingCanvasRefProps, DrawingCanvasForw
           const rect: DOMRect = canvas.current.getBoundingClientRect();
           canvasContext.clearRect(0, 0, rect.height, rect.width);
         }
-      }
+      },
+      getImageData() {
+
+        if (canvasContext) {
+          return canvasContext.getImageData(0, 0, CANVAS_HEIGHT_PX, CANVAS_WIDTH_PX);
+        }
+
+        return undefined;
+      },
     }
   }, []);
-
 
   const redraw = function(context: CanvasRenderingContext2D, x: number, y: number) {
 
@@ -204,13 +217,6 @@ export const DrawingCanvas = forwardRef<DrawingCanvasRefProps, DrawingCanvasForw
     </>
   )
 });
-
-export interface DrawingCanvasProps {
-    // setIsPainting: (isPainting: boolean) => void,
-    // isPainting: boolean,
-    backgroundImageUrl?: string,
-    showAnswer?: boolean
-}
 
 /**
  * Point objects are used to indicate a coordinate on the drawing canvas.

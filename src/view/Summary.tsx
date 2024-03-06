@@ -47,6 +47,9 @@ export const SummaryView: React.FC<SummaryViewProps> = (
         >
           Go again!
         </button>
+        <button className="card-button" onClick={() => {
+          props.setView(Views.Practice);
+        }}>Retry</button>
       </div>
     </>
   );

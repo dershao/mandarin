@@ -4,9 +4,15 @@ import React from 'react';
 import characterJson from '../data/hsk_characters.json';
 import { Views } from '.';
 import { getRandomCharacters, setStateGenericEventHandlerWrapper } from '../utils';
-import { CharacterDictionary, hsk1_unique_chars_unicode } from '../data';
+import { CharacterDictionary, hsk1_unique_chars_unicode, hsk2_unique_chars_unicode, hsk3_unique_chars_unicode } from '../data';
 import { CharacterProps } from '../component/character';
-import { Card, createCard } from '../utils/card'; 
+import { Card, createCard } from '../utils/card';
+
+const CHARACTER_CODES = [
+  ...hsk1_unique_chars_unicode,
+  // ...hsk2_unique_chars_unicode,
+  // ...hsk3_unique_chars_unicode
+]
 
 export const OptionsView: React.FC<OptionsProps> = (props: OptionsProps) => {
   return (
@@ -25,39 +31,8 @@ export const OptionsView: React.FC<OptionsProps> = (props: OptionsProps) => {
   );
 }
 
-function sessionMapInterface(props: OptionsProps, sessionName: string, cards: Card<CharacterProps>[]) {
-
-  return <>
-    <div className="session" key={sessionName}>
-      <div className="small-font">{sessionName}</div>
-      <div className="button-group">
-        <button className="button" onClick={continueSessionHandler(props, cards)}>Continue Session</button>
-        <button className="button" onClick={deleteSessionHandler(props)}>Delete</button>
-      </div>
-    </div>
-  </>
-}
-
-function continueSessionHandler(props: OptionsProps, cards: Card<CharacterProps>[]) {
-
-  const setStateInputs: [any, any][] = [
-    [cards, props.setCards],
-    [Views.Practice, props.setView]
-  ]
-
-  return setStateGenericEventHandlerWrapper(setStateInputs);
-}
-
-function deleteSessionHandler(props: OptionsProps) {
-
-  const setStateInputs: [any, any][] = [
-    [[], props.setCards]
-  ]
-  return setStateGenericEventHandlerWrapper(setStateInputs);
-}
-
 function quickStartHandler(props: OptionsProps) {
-  const selected_character_unicode = getRandomCharacters(hsk1_unique_chars_unicode, 3)
+  const selected_character_unicode = getRandomCharacters(CHARACTER_CODES, 3)
 
   const cards = selected_character_unicode.map((character_unicode) => {
     const character: CharacterDictionary = characterJson[character_unicode as keyof typeof characterJson];
@@ -95,5 +70,4 @@ export interface OptionsProps {
   
   setCards: (cards: Card<CharacterProps>[]) => void,
   setView: (view: Views) => void,
-  sessionMap: Record<string, Card<CharacterProps>[]>
 }

@@ -18,22 +18,21 @@ export const PracticeView: React.FC<PracticeViewProperties> = (props: PracticeVi
   const canvasRef = useRef<DrawingCanvasRefProps>(null);
 
   const [seenAllCharacters, setSeenAllCharacters] = useState(false);
-  const [practiceViewState, setPracticeViewState] = useState({
-    sequence: 0
-  });
+  const [sequence, setSequence] = useState(0);
 
   const cards: Card<CharacterProps>[] = props.cards;
 
-  if (practiceViewState.sequence === cards.length - 1 && seenAllCharacters === false) {
+  if (sequence === cards.length - 1 && seenAllCharacters === false) {
     setSeenAllCharacters(true);
   }
 
-  const currentCard = props.cards[practiceViewState.sequence];
+  const currentCard = props.cards[sequence];
   const characterProps = currentCard.card;
 
   const svgUrl = currentCard ? require(`../data/svgs/${characterProps?.svgCode}.svg`) : undefined;
   const drawingCanvasProps: DrawingCanvasProps = {
     backgroundImageUrl: svgUrl,
+    showAnswer: true
   }
 
   const setNextCard = (cards: Card<CharacterProps>[], sequence: number) => {
@@ -45,7 +44,7 @@ export const PracticeView: React.FC<PracticeViewProperties> = (props: PracticeVi
         canvasImage.style.backgroundImage = `url('${svgUrl.default}')`
       }
       props.setCards([...cards]);
-      setPracticeViewState(prevState => ({sequence: sequence}))
+      setSequence(sequence);
     }
   }
 
@@ -68,10 +67,10 @@ export const PracticeView: React.FC<PracticeViewProperties> = (props: PracticeVi
         </div>
         <div className='bottom'>
           <div id='feedback-panel'>
-            {practiceViewState.sequence === 0 && <button className="card-button-disabled">Prev</button>}
-            {practiceViewState.sequence > 0 && <button className="card-button" onClick={setNextCard(cards, practiceViewState.sequence - 1)}>Prev</button>}
-            {practiceViewState.sequence === cards.length - 1 && <button className="card-button-disabled">Next</button>}
-            {practiceViewState.sequence < cards.length - 1 && <button className="card-button" onClick={setNextCard(cards, practiceViewState.sequence + 1)}>Next</button>}
+            {sequence === 0 && <button className="card-button-disabled">Prev</button>}
+            {sequence > 0 && <button className="card-button" onClick={setNextCard(cards, sequence - 1)}>Prev</button>}
+            {sequence === cards.length - 1 && <button className="card-button-disabled">Next</button>}
+            {sequence < cards.length - 1 && <button className="card-button" onClick={setNextCard(cards, sequence + 1)}>Next</button>}
           </div>
           <div id='ready-panel'>
             {seenAllCharacters && <button className="card-button" onClick={ready}>I&apos;m Ready</button>}

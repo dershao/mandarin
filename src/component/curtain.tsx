@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Dispatch, SetStateAction } from 'react';
 
 import { Card } from '../utils/card';
 import { CharacterProps } from './character'
@@ -7,7 +7,7 @@ import '../css/curtain.css';
 interface CurtainProps {
     character: Card<CharacterProps>,
     isActive: boolean,
-    setActive: any
+    setActive: Dispatch<SetStateAction<boolean>>
 }
 
 export const Curtain: React.FC<CurtainProps> = (props: CurtainProps) => {
