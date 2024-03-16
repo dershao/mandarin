@@ -113,7 +113,7 @@ export const DrawView: React.FC<DrawViewProps> = (props: DrawViewProps) => {
                 reset={reset}
               />
               <CharacterInfo {...characterProps} />
-              <div className="canvas-wrapper" onMouseDown={() => setIsDrawing(true)}>
+              <div className="canvas-wrapper" onMouseDown={() => setIsDrawing(true)} onTouchEnd={() => setIsDrawing(true)}>
                 <DrawingCanvas
                   ref={canvasRef}
                   drawingCanvasProps={drawingCanvasProps}

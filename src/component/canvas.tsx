@@ -21,16 +21,12 @@ interface DrawingCanvasForwardRefComponentProps {
 // Disabling prop-types since we are already typing in the forwardref props
 // If not disabled, it will complain prop validation is not set for `drawingCanvasProps`
 export const DrawingCanvas = forwardRef<DrawingCanvasRefProps, DrawingCanvasForwardRefComponentProps>(function canvasComponent(canvasForwardRefProps: DrawingCanvasForwardRefComponentProps, ref) {
-  const CANVAS_WIDTH_PX = 450;
-  const CANVAS_HEIGHT_PX = 450;
   const [previousPoint, setPreviousPoint] = useState<Point>(); // previous coordinate
   const [canvasContext, setCanvasContext] = useState<CanvasRenderingContext2D>();
   const [isPainting, setIsPainting] = useState(false);
   const canvas = useRef<HTMLCanvasElement>(null);
   
-  const props: DrawingCanvasProps = canvasForwardRefProps.drawingCanvasProps; 
-  // const setIsPainting = props.setIsPainting;
-  // const isPainting = props.isPainting;
+  const props: DrawingCanvasProps = canvasForwardRefProps.drawingCanvasProps;
 
   function componentSetup() {
 
@@ -38,8 +34,8 @@ export const DrawingCanvas = forwardRef<DrawingCanvasRefProps, DrawingCanvasForw
       throw new Error("Canvas was not initialized properly");
     }
 
-    canvas.current.width = CANVAS_WIDTH_PX;
-    canvas.current.height = CANVAS_HEIGHT_PX;
+    canvas.current.width = canvas.current.clientWidth;
+    canvas.current.height = canvas.current.clientHeight;
     canvas.current.style.backgroundSize = 'cover';
     canvas.current.style.backgroundPosition = 'center';
     canvas.current.style.backgroundRepeat = 'no-repeat';
@@ -70,8 +66,8 @@ export const DrawingCanvas = forwardRef<DrawingCanvasRefProps, DrawingCanvasForw
       },
       getImageData() {
 
-        if (canvasContext) {
-          return canvasContext.getImageData(0, 0, CANVAS_HEIGHT_PX, CANVAS_WIDTH_PX);
+        if (canvasContext && canvas.current) {
+          return canvasContext.getImageData(0, 0, canvas.current.clientHeight, canvas.current.clientWidth);
         }
 
         return undefined;
@@ -115,8 +111,7 @@ export const DrawingCanvas = forwardRef<DrawingCanvasRefProps, DrawingCanvasForw
 
       setPreviousPoint(point);
       setIsPainting(true);
-    }
-        
+    }    
   }
 
   function onMouseUp() {
@@ -165,7 +160,6 @@ export const DrawingCanvas = forwardRef<DrawingCanvasRefProps, DrawingCanvasForw
       const y = event.targetTouches[0].clientY - 1 - rect.top;
       const point: Point = {x, y};
 
-
       setPreviousPoint(point);
       setIsPainting(true);
     }
@@ -184,7 +178,7 @@ export const DrawingCanvas = forwardRef<DrawingCanvasRefProps, DrawingCanvasForw
       const y = event.targetTouches[0].clientY - 1 - rect.top;
       const point: Point = {x, y};
       redraw(canvasContext, x, y);
-      setPreviousPoint(point);  
+      setPreviousPoint(point);
     }
   }
 
