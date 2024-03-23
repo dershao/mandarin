@@ -1,0 +1,23 @@
+#quit-screen-wrapper {
+    width: 100%;
+    height: 100%;
+    z-index: 100;
+}
+
+.quit-panel {
+    position: absolute; /* Needed to define the z-index */
+    background: rgba(0, 0, 0, 0.9);
+    z-index: 100;
+    width: 100%;
+    height: 100%;
+    top: -100%;
+    float: left;
+}
+
+.quit-confirmation {
+    font-size: 2em;
+}
+
+.quit-panel.visible {
+    top: 0;
+}

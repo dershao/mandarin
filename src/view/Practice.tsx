@@ -2,10 +2,11 @@ import '../css/Practice.css'
 
 import React, { useState, useRef, Dispatch, SetStateAction } from "react";
 import { DrawingCanvas, DrawingCanvasProps } from "../component/canvas";
-import { CharacterInfo, CharacterPanel, CharacterProps } from '../component/character';
+import { CharacterInfo, CharacterProps } from '../component/character';
 import { DrawingCanvasRefProps } from '../component/canvas';
 import { Card } from '../utils/card';
 import { Views } from '.';
+import { PracticePanel } from '../component/practice-panel';
 
 export interface PracticeViewProperties {
   cards: Card<CharacterProps>[]
@@ -54,15 +55,14 @@ export const PracticeView: React.FC<PracticeViewProperties> = (props: PracticeVi
 
   return (
     <>
+      <header className="App-header">
+        <PracticePanel characterProps={characterProps} clearCanvas={() => canvasRef.current?.clearCanvas()} setView={props.setView} />
+      </header>
       <div id='practice-view'>
         <div className='canvas-wrapper'>
           <div className='centered'>
             <DrawingCanvas ref={canvasRef} drawingCanvasProps={drawingCanvasProps}/>
             <CharacterInfo {...characterProps}/>
-          </div>
-          <div className='right'>
-            <button className="card-button" onClick={() => canvasRef.current?.clearCanvas()}>Clear Canvas</button>
-            <CharacterPanel {...characterProps}/>
           </div>
         </div>
         <div className='bottom'>

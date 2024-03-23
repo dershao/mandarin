@@ -24,7 +24,7 @@ export const OptionsView: React.FC<OptionsProps> = (props: OptionsProps) => {
         </div>
         <div className="box" onClick={catalog(props)}>
           <div className="big-font">Custom Learning</div>
-          <div className="small-font">Explore the full catalogue of characters and choose what you want to learn</div>
+          <div className="small-font">Customize characters from full catalogue</div>
         </div>
       </div>
     </div>
@@ -48,7 +48,6 @@ function quickStartHandler(props: OptionsProps) {
   /*eslint-disable @typescript-eslint/no-explicit-any */
   // Need explicit any since this is a generic state update handler which can take various
   // state type and function signatures for updating state
-  // TODO: investigate if we can replace this by representing the state as an object instead
   const setStateInputs: [any, any][] = [
     [cards, props.setCards],
     [Views.Practice, props.setView]

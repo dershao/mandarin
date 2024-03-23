@@ -12,14 +12,10 @@ function App() {
 
   const [cards, setCards] = useState<Card<CharacterProps>[]>([]);
   const [correct, setCorrect] = useState(new Array(cards.length));
-
-  const [view, setView] = useState<Views>(Views.Options);
+  const [view, setView] = useState<Views>(Views.Main);
 
   return (
     <div className="App">
-      <header className="App-header">
-        <Header setView={setView}/>
-      </header>
       <section className="App-body">
         {view === Views.Main && <MainView setView={setView} />}
         {view === Views.Options && <OptionsView setView={setView} setCards={setCards} />}

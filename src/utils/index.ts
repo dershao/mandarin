@@ -1,7 +1,6 @@
 export * from './scheduler';
 export * from './date-scheduler';
 
-// TODO: Determine the proper type for a generic function that takes the specific input
 /* eslint-disable @typescript-eslint/no-explicit-any */
 export function setStateGenericEventHandlerWrapper(stateUpdateInputs: [state: any, setState: (state: any) => void][]) {
 
