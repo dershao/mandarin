@@ -1,7 +1,7 @@
 #practice-view {
     width: 90%;
     margin: 0 auto;
-    padding: 32px;
+
 }
 
 .canvas-wrapper {
@@ -18,4 +18,10 @@
 
 .bottom {
     width: 100%;
+}
+
+@media (min-width: 450px) {
+    #practice-view {
+        padding: 32px;
+    }
 }
