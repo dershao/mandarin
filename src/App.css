@@ -13,3 +13,44 @@
   margin: auto;
   padding: 0 10px;
 }
+
+.card-button {
+  border-style: solid;
+  border-width: 0.125rem;
+  border-color: #0a7522;
+  border-radius: 0.5rem;
+  background-color: #0a7522;
+  color: #fff;
+  cursor: pointer;
+  font-size: 1.25rem;
+  padding: 1rem 3rem;
+  text-align: center;
+  transition: all .5s ease;
+  margin: 0.3em;
+}
+
+.card-button:hover {
+  border-color: #035014;
+  background-color: #035014;
+}
+
+.card-button-remove:hover {
+  border-color: #550101;
+  background-color: #550101;
+}
+
+.card-button-disabled {
+  border-style: solid;
+  border-width: 0.125rem;
+  border-color: #02250a;
+  border-radius: 0.5rem;
+  background-color: #02250a;
+  color: #fff;
+  cursor: pointer;
+  font-size: 1.25rem;
+  font-weight: 500;
+  padding: 1rem 3rem;
+  text-align: center;
+  transition: all .5s ease;
+  margin: 0.3em;
+}

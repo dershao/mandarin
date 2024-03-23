@@ -7,13 +7,12 @@ import {
   DrawingCanvasRefProps,
   DrawingCanvasProps,
 } from "../component/canvas";
-import { Timer } from "../component/timer";
-
 import { Card } from "../utils/card";
 import { CharacterProps, CharacterInfo } from "../component/character";
 import "../css/canvas.css";
 import "../css/draw.css";
 import { Views } from ".";
+import { DrawPanel } from '../component/draw-panel';
 
 interface DrawViewProps {
   setView: Dispatch<SetStateAction<Views>>;
@@ -98,6 +97,14 @@ export const DrawView: React.FC<DrawViewProps> = (props: DrawViewProps) => {
 
     drawViewElement = (
       <>
+        <DrawPanel characterProps={characterProps} 
+          clearCanvas={() => canvasRef.current?.clearCanvas()}
+          setView={props.setView}
+          active={active}
+          level={level}
+          setLevel={setLevel}
+          reset={reset}
+        />
         {characterProps && level < numberOfCards && (
           <>
             <Curtain
@@ -106,12 +113,6 @@ export const DrawView: React.FC<DrawViewProps> = (props: DrawViewProps) => {
               setActive={setActive}
             />
             <div className="draw-wrapper">
-              <Timer
-                isActive={active}
-                level={level}
-                setLevel={setLevel}
-                reset={reset}
-              />
               <CharacterInfo {...characterProps} />
               <div className="canvas-wrapper" onMouseDown={() => setIsDrawing(true)} onTouchEnd={() => setIsDrawing(true)}>
                 <DrawingCanvas

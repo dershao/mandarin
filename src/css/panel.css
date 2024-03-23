@@ -1,0 +1,13 @@
+#canvas-panel {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    width: 100%;
+}
+
+@media (max-width: 450px) {
+    #canvas-panel {
+        justify-content: center;
+        width: 100%;
+    }
+}

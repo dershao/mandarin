@@ -24,3 +24,4 @@ yarn-error.log*
 
 src/data/svgs/*
 src/data/svgs-still/*
+src/data/character_images/*

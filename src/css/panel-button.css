@@ -1,0 +1,100 @@
+.panel-button {
+    display: inline-block;
+    box-sizing: border-box;
+    min-width: 56px;
+    border-style: solid;
+    border-width: 0.125rem;
+    border-color: #0a7522;
+    border-radius: 0.5rem;
+    background-color: #0a7522;
+    color: #fff;
+    cursor:pointer;
+    font-size: 1.25rem;
+    text-align: center;
+    transition: all .5s ease;
+    margin: 5px 10px 0 10px;
+}
+
+.panel-button-wrapper {
+    font-weight: 700;
+    letter-spacing: .8px;
+    line-height: 20px;
+    outline: none;
+    text-align: center;
+    transform: translateZ(0);
+}
+
+.tooltip-text {
+    visibility: hidden;
+    font-size: 16px;
+    width: 120px;
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px;
+    position: absolute;
+    z-index: 1;
+    top: 100%; /* Position below the button */
+    left: 50%;
+    margin-top: 5px; /* Adjust as needed */
+    margin-left: -60px;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.panel-button:hover {
+    border-color: #035014;
+    background-color: #035014;
+}
+
+.panel-button-wrapper:hover .tooltip-text {
+    visibility: visible;
+    opacity: 1;
+}
+
+.panel-button-disabled {
+    box-sizing: border-box;
+    border-style: solid;
+    border-width: 0.125rem;
+    border-color: #02250a;
+    border-radius: 0.5rem;
+    background-color: #02250a;
+    color: #fff;
+    cursor:pointer;
+    font-size: 1.25rem;
+    text-align: center;
+    transition: all .5s ease;
+}
+
+.panel-button.quit {
+    background-color: #912c04;
+    border-color: #912c04;
+}
+
+.icon {
+    display: inline-block;
+    height: 32px;
+    width: 32px;
+}
+
+.icon.write {
+    background-image: url('../../public/writing.svg');
+    background-repeat: no-repeat;
+}
+
+.icon.hide {
+    background-image: url('../../public/hide.svg');
+    background-repeat: no-repeat;
+}
+
+
+.icon.quit {
+    background-image: url('../../public/cross.svg');
+    background-repeat: no-repeat;
+}
+
+.icon.clear {
+    background-image: url('../../public/eraser.svg');
+    background-repeat: no-repeat;
+}
