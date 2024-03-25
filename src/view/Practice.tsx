@@ -66,12 +66,12 @@ export const PracticeView: React.FC<PracticeViewProperties> = (props: PracticeVi
           </div>
         </div>
         <div className='bottom'>
-          <div id='feedback-panel'>
+          {cards.length > 1 && <div id='feedback-panel'>
             {sequence === 0 && <button className="card-button-disabled">Prev</button>}
             {sequence > 0 && <button className="card-button" onClick={setNextCard(cards, sequence - 1)}>Prev</button>}
             {sequence === cards.length - 1 && <button className="card-button-disabled">Next</button>}
             {sequence < cards.length - 1 && <button className="card-button" onClick={setNextCard(cards, sequence + 1)}>Next</button>}
-          </div>
+          </div>}
           <div id='ready-panel'>
             {seenAllCharacters && <button className="card-button" onClick={ready}>I&apos;m Ready</button>}
           </div>

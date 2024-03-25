@@ -3,6 +3,7 @@ import { Views } from ".";
 import { Card } from "../utils/card";
 import { CharacterImage, CharacterProps } from "../component/character";
 import "../css/summary.css";
+import { Header } from "../component/header";
 
 interface SummaryViewProps {
   setView: Dispatch<SetStateAction<Views>>;
@@ -30,6 +31,7 @@ export const SummaryView: React.FC<SummaryViewProps> = (
 
   return (
     <>
+      <Header />
       <div id="summary-wrapper">
         {cardsCorrectPair.map((cardPair) => (
           <div className="summary-card" key={cardPair.card.svgCode}>
@@ -45,7 +47,7 @@ export const SummaryView: React.FC<SummaryViewProps> = (
             props.setView(Views.Options);
           }}
         >
-          Go again!
+          New set
         </button>
         <button className="card-button" onClick={() => {
           props.setView(Views.Practice);
