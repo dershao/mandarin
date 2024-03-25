@@ -1,6 +1,5 @@
 import React, { useState, useEffect, Dispatch, SetStateAction } from 'react';
 
-
 interface TimerProps {
     isActive: boolean,
     level: number,
@@ -16,7 +15,6 @@ export const Timer: React.FC<TimerProps> = (props: TimerProps) => {
 
   const time = seconds < 10 ? '0' + seconds : seconds;
   const timeDisplay = `00:${time}`;
-
 
   useEffect(() => {
     let interval: NodeJS.Timer | undefined = undefined;
@@ -48,5 +46,4 @@ export const Timer: React.FC<TimerProps> = (props: TimerProps) => {
       </div>
     </>
   );
-
 }

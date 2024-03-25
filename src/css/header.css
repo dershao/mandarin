@@ -6,6 +6,7 @@
     padding: 0 16px;
     display: flex;
     justify-content: space-between;
+    font-size: 32px;
 }
 
 #header-panel {
@@ -23,28 +24,4 @@
 .header-panel-item:hover {
     color: #0a7522;
     cursor: pointer;
-}
-
-@media (max-width: 314px) {
-    #header-text {
-        font-size: 24px;
-    }
-}
-
-@media (min-width: 315px) {
-    #header-text {
-        font-size: 32px;
-    }
-}
-
-@media (max-width: 550px) {
-    #header { 
-        font-size: 16px;
-    }
-}
-
-@media (min-width: 551px) {
-    #header {
-        font-size: 32px;
-    }
 }
