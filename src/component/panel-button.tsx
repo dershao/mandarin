@@ -87,3 +87,15 @@ export const QuitPanelButton: React.FC<QuitPanelButtonProps> = (props: QuitPanel
     </>
   )
 }
+
+export const AboutPanelButton: React.FC = () => {
+
+  return (
+    <>
+      <div className="panel-button-wrapper">
+        <button className="panel-button about"><span className="icon about"/></button>
+      </div>
+    </>
+  )
+}
+

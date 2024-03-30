@@ -1,20 +1,27 @@
 import '../css/Main.css'
 
-import React from 'react';
+import React, { useState, Dispatch, SetStateAction } from 'react';
 import { Views } from '../view';
 import { setStateGenericEventHandlerWrapper } from '../utils';
-import { Header } from '../component/header';
+import { MainPanel } from '../component/main-panel';
+import { Prompt } from '../component/prompt';
+import { CharacterProps } from '../component/character';
+import { Card } from '../utils/card'; 
 
 export const MainView: React.FC<MainProps> = (props: MainProps) => {
 
+  const [promptActive, setPromptActive] = useState(false);
+
   return (
     <>
-      <Header />
+      <Prompt isActive={promptActive} setView={props.setView} setCards={props.setCards} />
+      <MainPanel />
       <div className="container">
-        <h1 className="title">Real Time Mandarin</h1>
-        <p className="paragraph">Alpha</p>
+        <div className="title">Real Time Mandarin</div>
+        <canvas id="character"></canvas>
+        <p className="paragraph">Learn Mandarin with a Neural Network</p>
         <div className="button-group">
-          <button className="button" onClick={setStateGenericEventHandlerWrapper([[Views.Prompt, props.setView]])}>Start</button>
+          <button className="button" onClick={() => {setPromptActive(true)}}>Start</button>
         </div>
       </div>
     </>
@@ -23,5 +30,6 @@ export const MainView: React.FC<MainProps> = (props: MainProps) => {
 
 export interface MainProps {
 
-  setView: (view: Views) => void;
+  setView: Dispatch<SetStateAction<Views>>
+  setCards: Dispatch<SetStateAction<Card<CharacterProps>[]>>
 }

@@ -1,14 +1,12 @@
-
 import React, { KeyboardEvent, useState } from 'react';
 
 import '../css/prompt.css';
 import characterJson from '../data/hsk_characters.json';
-import { Views } from '.';
+import { Views } from '../view';
 import { getRandomCharacters } from '../utils';
 import { CharacterDictionary, hsk1_unique_chars_unicode, hsk2_unique_chars_unicode, hsk3_unique_chars_unicode } from '../data';
 import { CharacterProps } from '../component/character';
 import { Card, createCard } from '../utils/card';
-import { MainPanel } from '../component/main-panel';
 
 const CHARACTER_CODES = [
   ...hsk1_unique_chars_unicode,
@@ -20,6 +18,7 @@ export interface PromptProps {
   
   setCards: (cards: Card<CharacterProps>[]) => void;
   setView: (view: Views) => void;
+  isActive: boolean;
 }
 
 function quickStartHandler(props: PromptProps, numberOfCharacters: number) {
@@ -40,10 +39,12 @@ function quickStartHandler(props: PromptProps, numberOfCharacters: number) {
   props.setView(Views.Practice);
 }
 
-export const PromptView: React.FC<PromptProps> = (props: PromptProps) => {
+export const Prompt: React.FC<PromptProps> = (props: PromptProps) => {
 
   const [value, setValue] = useState('');
   const [error, setError] = useState('');
+  const curtainClassName = props.isActive ? "prompt visible" : "prompt";
+
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
     const inputValue: string = event.target.value;
@@ -55,8 +56,6 @@ export const PromptView: React.FC<PromptProps> = (props: PromptProps) => {
     if (event.key === 'Enter') {
       const enteredValue: string = (event.target as HTMLInputElement).value;
       const number = Number(enteredValue);
-      console.log(number);
-
 
       if (enteredValue && !isNaN(number) && (number > 0 && number <= 5)) {
         quickStartHandler(props, number);
@@ -68,12 +67,12 @@ export const PromptView: React.FC<PromptProps> = (props: PromptProps) => {
 
   return (
     <>
-      <MainPanel />
-      <div id="prompt-view">
+      <div className={curtainClassName}>
         <div id="prompt-input-wrapper">
           <label>
-            How many characters would you like to learn? (1 to 5)
+            How many characters would you like to learn?
           </label>
+          <div>(1 to 5)</div>
           <div>
             <input id="prompt-input" 
               type="text"
@@ -82,7 +81,7 @@ export const PromptView: React.FC<PromptProps> = (props: PromptProps) => {
               onKeyDown={handleEnter} 
             />
           </div>
-          {error && <p style={{ color: 'red' }}>{error}</p>}
+          {error && <p id="error-text" style={{ color: 'red' }}>{error}</p>}
         </div>
       </div>
     </>

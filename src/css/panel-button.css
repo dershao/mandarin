@@ -88,7 +88,6 @@
     background-repeat: no-repeat;
 }
 
-
 .icon.quit {
     background-image: url('../../public/cross.svg');
     background-repeat: no-repeat;
@@ -96,5 +95,10 @@
 
 .icon.clear {
     background-image: url('../../public/eraser.svg');
+    background-repeat: no-repeat;
+}
+
+.icon.about {
+    background-image: url('../../public/question-mark.svg');
     background-repeat: no-repeat;
 }
