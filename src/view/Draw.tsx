@@ -20,18 +20,40 @@ interface DrawViewProps {
   cards: Card<CharacterProps>[];
 }
 
+function getPredictionText(prediction: string, isDrawing: boolean, isCorrect: boolean) {
+  if (!isDrawing) return "...";
+
+  if (prediction) {
+    if (isCorrect) {
+      return `You are drawing ${prediction}!`;
+    } else {
+      return `I think you are drawing ${prediction} ...`;
+    }
+  }
+
+  return "...";
+}
+
 export const DrawView: React.FC<DrawViewProps> = (props: DrawViewProps) => {
+  const cards: Card<CharacterProps>[] = props.cards;
+  const numberOfCards = cards.length;
+
   const [level, setLevel] = useState(0);
   const [active, setActive] = useState(false);
   const [isDrawing, setIsDrawing] = useState(false);
-  const [correct] = useState(new Array(3));
-
-  const cards: Card<CharacterProps>[] = props.cards;
-  const numberOfCards = cards.length;
+  const [prediction, setPrediction] = useState({
+    prediction: "",
+    isCorrect: false
+  });
+  const [correct] = useState(new Array(numberOfCards));
 
   const canvasRef = useRef<DrawingCanvasRefProps>(null);
 
   function fetchClassifyResults(imgData: ImageData | undefined) {
+
+    function sleep() {
+      return new Promise(res => setTimeout(res, 1000));
+    }
 
     if (!imgData) {
       console.error(`No image data was retrieved from canvas`);
@@ -54,17 +76,28 @@ export const DrawView: React.FC<DrawViewProps> = (props: DrawViewProps) => {
           }
         }
       }
-    }).then((res) => {
+    }).then(async (res) => {
       const currentCardCode = parseInt(cards[level].card.svgCode);
       const predictions = res.data.predictions;
 
       for (const prediction of predictions) {
         if (prediction === currentCardCode) {
           correct[level] = true;
+          setPrediction(prevState => {
+
+            return {...prevState, ...{prediction: String.fromCharCode(prediction), isCorrect: true}}
+          });
+          await sleep()
           setLevel(level + 1);
           reset();
+          return
         }
       }
+
+      setPrediction(prevState => {
+
+        return {...prevState, ...{prediction: String.fromCharCode(predictions[0]), isCorrect: false}}
+      });
     }).catch((err) => {
       console.error(`Error when calling ${serverUrl}, ${err}`);
     });
@@ -72,10 +105,18 @@ export const DrawView: React.FC<DrawViewProps> = (props: DrawViewProps) => {
 
   function reset() {
     setActive(false);
+    setPrediction(prevState => {
+
+      return {...prevState, ...{prediction: "", isCorrect: false}}
+    });
   }
 
   function clearCanvasHandler() {
     setIsDrawing(false);
+    setPrediction(prevState => {
+
+      return {...prevState, ...{prediction: ""}}
+    })
     canvasRef.current?.clearCanvas();
   }
 
@@ -123,6 +164,11 @@ export const DrawView: React.FC<DrawViewProps> = (props: DrawViewProps) => {
               <div className='bottom'>
                 <button className={isDrawing ? "card-button" : "card-button-disabled"} onClick={() => fetchClassifyResults(canvasRef?.current?.getImageData())}>Submit</button>
                 <button className="card-button" onClick={clearCanvasHandler}>Clear</button>
+              </div>
+            </div>
+            <div className="text-bubble-wrapper">
+              <div className="text-bubble">
+                {getPredictionText(prediction.prediction, isDrawing, prediction.isCorrect)}
               </div>
             </div>
           </>
