@@ -17,7 +17,7 @@ function App() {
   return (
     <div className="App">
       <section className="App-body">
-        {view === Views.Main && <MainView setView={setView} />}
+        {view === Views.Main && <MainView setView={setView} setCards={setCards} />}
         {view === Views.Prompt && <PromptView setView={setView} setCards={setCards} />}
         {view === Views.Options && <OptionsView setView={setView} setCards={setCards} />}
         {view === Views.Practice && <PracticeView setView={setView} cards={cards} setCards={setCards} />}
