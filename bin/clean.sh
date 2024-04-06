@@ -15,3 +15,12 @@ else
     echo "Cleaning src/data/svgs-still"
     rm src/data/svgs-still/*.*
 fi
+
+
+if [ -z "$(ls -A src/data/character_images)" ]; then
+
+    echo "character_images cleaned"
+else
+    echo "Cleaning src/data/character_images"
+    rm src/data/character_images/*.*
+fi
