@@ -42,7 +42,7 @@
   -webkit-filter: brightness(1.1);
 }
 
-@media (max-width: 450px) {
+@media (max-width: 500px) or (max-height: 800px) {
     #drawingCanvas {
         height: 340px;
         width: 340px;
