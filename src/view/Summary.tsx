@@ -13,9 +13,9 @@ interface SummaryViewProps {
 
 function getCorrectImage(isCorrect: boolean) {
   return isCorrect ? (
-    <img className="correct-img" src={`/correct.png`} alt={`Correct`} />
+    <img className="correct-img" src={`${process.env.PUBLIC_URL}/correct.png`} alt={`Correct`} />
   ) : (
-    <img className="correct-img" src={`/incorrect.png`} alt={`Incorrect`} />
+    <img className="correct-img" src={`${process.env.PUBLIC_URL}/incorrect.png`} alt={`Incorrect`} />
   );
 }
 
@@ -44,7 +44,7 @@ export const SummaryView: React.FC<SummaryViewProps> = (
         <button
           className="card-button"
           onClick={() => {
-            props.setView(Views.Options);
+            props.setView(Views.Main);
           }}
         >
           New set

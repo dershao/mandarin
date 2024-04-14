@@ -1,5 +1,5 @@
 import React, { useState, useRef, Dispatch, SetStateAction } from "react";
-import axios from 'axios';
+import * as tf from "@tensorflow/tfjs";
 
 import { Curtain } from "../component/curtain";
 import {
@@ -13,11 +13,13 @@ import "../css/canvas.css";
 import "../css/draw.css";
 import { Views } from ".";
 import { DrawPanel } from '../component/draw-panel';
+import encoder_json from '../data/hsk3_encoder.json';
 
 interface DrawViewProps {
   setView: Dispatch<SetStateAction<Views>>;
   setCorrect: Dispatch<SetStateAction<boolean[]>>;
   cards: Card<CharacterProps>[];
+  model: tf.LayersModel;
 }
 
 function getPredictionText(prediction: string, isDrawing: boolean, isCorrect: boolean) {
@@ -35,6 +37,8 @@ function getPredictionText(prediction: string, isDrawing: boolean, isCorrect: bo
 }
 
 export const DrawView: React.FC<DrawViewProps> = (props: DrawViewProps) => {
+
+  const encoder = encoder_json as unknown as Record<string, number>;
   const cards: Card<CharacterProps>[] = props.cards;
   const numberOfCards = cards.length;
 
@@ -49,7 +53,18 @@ export const DrawView: React.FC<DrawViewProps> = (props: DrawViewProps) => {
 
   const canvasRef = useRef<DrawingCanvasRefProps>(null);
 
-  function fetchClassifyResults(imgData: ImageData | undefined) {
+  function addImageToDrawHistory(imageBitmap: ImageBitmap, height: number, width: number) {
+    const tempCanvas = document.createElement('canvas') as HTMLCanvasElement;
+    tempCanvas.height = height;
+    tempCanvas.width = width;
+
+    document.getElementsByClassName('draw-history')[0].appendChild(tempCanvas);
+    const tempCtx = tempCanvas.getContext('2d')!;
+    tempCtx.drawImage(imageBitmap, 0, 0, width, height);
+    return tempCtx.getImageData(0, 0, width, height);
+  }
+
+  async function fetchClassifyResults(imgData: ImageData | undefined, model: tf.LayersModel) {
 
     function sleep() {
       return new Promise(res => setTimeout(res, 1000));
@@ -60,46 +75,44 @@ export const DrawView: React.FC<DrawViewProps> = (props: DrawViewProps) => {
       return;
     }
 
-    // TODO: This should be set from environment variables
-    const serverUrl = 'http://localhost:5000/predict';
-    const image = Array.from(imgData.data)
+    const imageBitmap = await createImageBitmap(imgData)
 
-    axios({
-      method: 'post',
-      url: serverUrl,
-      data: {
-        data: {
-          type: "image",
-          attributes: {
-            image: image,
-            channels: 4
-          }
-        }
+    const resizedImageData = addImageToDrawHistory(imageBitmap, 64, 64);
+    
+    const image = Array.from(resizedImageData.data);
+
+    const image_tensor = tf.tensor(image);
+    const resulting_image = image_tensor.reshape([1, 64, 64, 4]).slice([0, 0, 0, 2], [1, 64, 64, 1]);
+    const model_input = tf.fill([1, 64, 64, 1], 255).sub(resulting_image).div(255);
+    const model_output = model.predict(model_input) as tf.Tensor<tf.Rank>;
+    const top_values = tf.topk(model_output, 10);
+    
+    const predictions = Array.from(top_values.indices.dataSync().map((index): number => {
+
+      return encoder[`${index}`]
+    }));
+
+    console.debug(`Predictions: ${JSON.stringify(predictions)}`);
+
+    const currentCardCode = parseInt(cards[level].card.svgCode);
+
+    for (const prediction of predictions) {
+      if (prediction === currentCardCode) {
+        correct[level] = true;
+        setPrediction(prevState => {
+
+          return {...prevState, ...{prediction: String.fromCharCode(prediction), isCorrect: true}}
+        });
+        await sleep()
+        setLevel(level + 1);
+        reset();
+        return
       }
-    }).then(async (res) => {
-      const currentCardCode = parseInt(cards[level].card.svgCode);
-      const predictions = res.data.predictions;
+    }
 
-      for (const prediction of predictions) {
-        if (prediction === currentCardCode) {
-          correct[level] = true;
-          setPrediction(prevState => {
+    setPrediction(prevState => {
 
-            return {...prevState, ...{prediction: String.fromCharCode(prediction), isCorrect: true}}
-          });
-          await sleep()
-          setLevel(level + 1);
-          reset();
-          return
-        }
-      }
-
-      setPrediction(prevState => {
-
-        return {...prevState, ...{prediction: String.fromCharCode(predictions[0]), isCorrect: false}}
-      });
-    }).catch((err) => {
-      console.error(`Error when calling ${serverUrl}, ${err}`);
+      return {...prevState, ...{prediction: String.fromCharCode(predictions[0]), isCorrect: false}}
     });
   }
 
@@ -109,12 +122,19 @@ export const DrawView: React.FC<DrawViewProps> = (props: DrawViewProps) => {
 
       return {...prevState, ...{prediction: "", isCorrect: false}}
     });
+    clearDrawHistory();
+  }
+
+  function clearDrawHistory() {
+    const drawHistoryElement = document.getElementsByClassName('draw-history');
+    if (drawHistoryElement.length > 0) {
+      drawHistoryElement[0].innerHTML = ''
+    }
   }
 
   function clearCanvasHandler() {
     setIsDrawing(false);
     setPrediction(prevState => {
-
       return {...prevState, ...{prediction: ""}}
     })
     canvasRef.current?.clearCanvas();
@@ -135,6 +155,10 @@ export const DrawView: React.FC<DrawViewProps> = (props: DrawViewProps) => {
     const drawingCanvasProps: DrawingCanvasProps = {
       backgroundImageUrl: svgUrl,
     };
+
+    const drawHistoryJsx = <>
+      <div className='draw-history'></div>
+    </>
 
     drawViewElement = (
       <>
@@ -162,9 +186,10 @@ export const DrawView: React.FC<DrawViewProps> = (props: DrawViewProps) => {
                 />
               </div>
               <div className='bottom'>
-                <button className={isDrawing ? "card-button" : "card-button-disabled"} onClick={() => fetchClassifyResults(canvasRef?.current?.getImageData())}>Submit</button>
+                <button className={isDrawing ? "card-button" : "card-button-disabled"} onClick={() => fetchClassifyResults(canvasRef?.current?.getImageData(), props.model)}>Submit</button>
                 <button className="card-button" onClick={clearCanvasHandler}>Clear</button>
               </div>
+              {drawHistoryJsx}
             </div>
             <div className="text-bubble-wrapper">
               <div className="text-bubble">
