@@ -33,15 +33,26 @@ export const DrawingCanvas = forwardRef<DrawingCanvasRefProps, DrawingCanvasForw
     if (!canvas || !canvas.current) {
       throw new Error("Canvas was not initialized properly");
     }
-
-    canvas.current.width = canvas.current.clientWidth;
     canvas.current.height = canvas.current.clientHeight;
+    canvas.current.width = canvas.current.clientWidth;
     canvas.current.style.backgroundSize = 'cover';
     canvas.current.style.backgroundPosition = 'center';
     canvas.current.style.backgroundRepeat = 'no-repeat';
+
+    const handleResize = () => {
+      if (canvas.current) {
+        canvas.current.height = canvas.current.clientHeight;
+        canvas.current.width = canvas.current.clientWidth;  
+      }
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
   }
 
-  useEffect(componentSetup, [canvas, props.backgroundImageUrl]);
+  useEffect(componentSetup, []);
 
   useImperativeHandle(ref, () => {
 

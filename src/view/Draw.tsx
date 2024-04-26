@@ -92,8 +92,6 @@ export const DrawView: React.FC<DrawViewProps> = (props: DrawViewProps) => {
       return encoder[`${index}`]
     }));
 
-    console.debug(`Predictions: ${JSON.stringify(predictions)}`);
-
     const currentCardCode = parseInt(cards[level].card.svgCode);
 
     for (const prediction of predictions) {

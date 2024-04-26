@@ -2,7 +2,6 @@ import '../css/Main.css'
 
 import React, { useState, Dispatch, SetStateAction } from 'react';
 import { Views } from '../view';
-import { setStateGenericEventHandlerWrapper } from '../utils';
 import { MainPanel } from '../component/main-panel';
 import { Prompt } from '../component/prompt';
 import { CharacterProps } from '../component/character';

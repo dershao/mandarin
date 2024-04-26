@@ -1,6 +1,6 @@
 import '../css/header.css';
 import '../css/panel-button.css';
-import React, { Dispatch, SetStateAction, useState } from 'react';
+import React, { Dispatch, SetStateAction } from 'react';
 import { CharacterProps } from './character';
 import { Views } from '../view';
 

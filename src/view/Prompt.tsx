@@ -12,8 +12,8 @@ import { MainPanel } from '../component/main-panel';
 
 const CHARACTER_CODES = [
   ...hsk1_unique_chars_unicode,
-  // ...hsk2_unique_chars_unicode,
-  // ...hsk3_unique_chars_unicode
+  ...hsk2_unique_chars_unicode,
+  ...hsk3_unique_chars_unicode
 ]
 
 export interface PromptProps {
