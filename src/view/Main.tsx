@@ -16,7 +16,7 @@ export const MainView: React.FC<MainProps> = (props: MainProps) => {
       <Prompt isActive={promptActive} setView={props.setView} setCards={props.setCards} />
       <MainPanel />
       <div className="container">
-        <div className="title">Real Time Mandarin</div>
+        <div className="title">Quick Draw Mandarin</div>
         <canvas id="character"></canvas>
         <p className="paragraph">Learn Mandarin with a Neural Network</p>
         <div className="button-group">
