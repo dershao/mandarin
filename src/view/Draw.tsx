@@ -116,10 +116,7 @@ export const DrawView: React.FC<DrawViewProps> = (props: DrawViewProps) => {
 
   function reset() {
     setActive(false);
-    setPrediction(prevState => {
-
-      return {...prevState, ...{prediction: "", isCorrect: false}}
-    });
+    clearCanvasHandler();
     clearDrawHistory();
   }
 

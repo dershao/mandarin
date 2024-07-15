@@ -15,6 +15,10 @@ export interface QuitPanelButtonProps extends PanelButtonProps {
   setQuitActive: Dispatch<SetStateAction<boolean>>;
 }
 
+export interface AboutPanelButtonProps {
+  setTutorialActive: Dispatch<SetStateAction<boolean>>;
+}
+
 /**
  * Show only the grid for practicing without the image present
  */
@@ -88,12 +92,12 @@ export const QuitPanelButton: React.FC<QuitPanelButtonProps> = (props: QuitPanel
   )
 }
 
-export const AboutPanelButton: React.FC = () => {
+export const AboutPanelButton: React.FC<AboutPanelButtonProps> = (props: AboutPanelButtonProps) => {
 
   return (
     <>
       <div className="panel-button-wrapper">
-        <button className="panel-button about"><span className="icon about"/></button>
+        <button className="panel-button about" onClick={() => {props.setTutorialActive(true)}}><span className="icon about"/></button>
       </div>
     </>
   )
